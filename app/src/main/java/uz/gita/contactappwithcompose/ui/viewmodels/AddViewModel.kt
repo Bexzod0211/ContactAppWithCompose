@@ -1,4 +1,7 @@
 package uz.gita.contactappwithcompose.ui.viewmodels
 
-class AddViewModel {
+import uz.gita.contactappwithcompose.data.source.local.entity.ContactEntity
+
+interface AddViewModel {
+    fun addContact(contact:ContactEntity)
 }

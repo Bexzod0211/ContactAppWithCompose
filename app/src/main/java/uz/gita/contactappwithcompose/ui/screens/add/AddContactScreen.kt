@@ -15,45 +15,65 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.hilt.getViewModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import uz.gita.contactappwithcompose.data.source.local.entity.ContactEntity
 import uz.gita.contactappwithcompose.ui.theme.ContactAppWithComposeTheme
+import uz.gita.contactappwithcompose.ui.viewmodels.AddViewModel
+import uz.gita.contactappwithcompose.ui.viewmodels.impl.AddViewModelImpl
 
-class AddContactScreen : AndroidScreen(){
+class AddContactScreen : AndroidScreen() {
     @Composable
     override fun Content() {
-
+        val viewModel: AddViewModel = getViewModel<AddViewModelImpl>()
     }
 
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScreenContent() {
+fun AddScreenContent(viewModel: AddViewModel) {
+    var fName = ""
+    var lName = ""
+    var phone = ""
+    val navigator = LocalNavigator.currentOrThrow
     ContactAppWithComposeTheme {
         Surface {
             Column(modifier = Modifier.fillMaxSize()) {
-                TextField(value = "", onValueChange = {}, modifier = Modifier
+                TextField(value = "", onValueChange = {
+                    fName = it
+                }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, top = 16.dp), placeholder = {
                     Text(text = "Firstname")
                 })
-                TextField(value = "", onValueChange = {}, modifier = Modifier
+                TextField(value = "", onValueChange = {
+                    lName = it
+                }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, top = 16.dp), placeholder = {
                     Text(text = "Lastname")
                 })
 
-                TextField(value = "", onValueChange = {}, modifier = Modifier
+                TextField(value = "", onValueChange = {
+                    phone = it
+                }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, top = 16.dp), placeholder = {
                     Text(text = "Phone number")
                 })
 
-                Button(onClick = {
-
-                }, modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp,top = 16.dp)
-                    .fillMaxWidth()
-                    .size(0.dp, 60.dp),) {
+                Button(
+                    onClick = {
+                              viewModel.addContact(ContactEntity(0,fName,lName,phone))
+                        navigator.pop()
+                    },
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                        .fillMaxWidth()
+                        .size(0.dp, 60.dp),
+                ) {
                     Text(text = "Add contact")
                 }
             }
@@ -64,5 +84,5 @@ fun AddScreenContent() {
 @Preview(showSystemUi = true)
 @Composable
 fun AddScreenPreview() {
-    AddScreenContent()
+//    AddScreenContent()
 }

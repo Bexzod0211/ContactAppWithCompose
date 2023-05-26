@@ -4,7 +4,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import uz.gita.contactappwithcompose.ui.usecase.AddUseCase
 import uz.gita.contactappwithcompose.ui.usecase.HomeUseCase
+import uz.gita.contactappwithcompose.ui.usecase.impl.AddUseCaseImpl
 import uz.gita.contactappwithcompose.ui.usecase.impl.HomeUseCaseImpl
 
 @Module
@@ -13,4 +15,7 @@ interface UseCaseModule {
 
     @Binds
     fun bindHomeUseCase(impl:HomeUseCaseImpl):HomeUseCase
+
+    @Binds
+    fun bindAddUseCase(impl:AddUseCaseImpl):AddUseCase
 }

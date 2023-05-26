@@ -117,9 +117,14 @@ dependencies {
     implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
     implementation("cafe.adriel.voyager:voyager-hilt:$voyagerVersion")
 
+    // Hilt integration
+    implementation("cafe.adriel.voyager:voyager-hilt:$voyagerVersion")
+    implementation("androidx.compose.runtime:runtime-livedata:1.4.3")
+
     // ROOM
     implementation 'androidx.room:room-runtime:2.5.1'
     implementation 'androidx.room:room-ktx:2.5.1'
     kapt 'androidx.room:room-compiler:2.5.1'
 
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.6.1"
 }
