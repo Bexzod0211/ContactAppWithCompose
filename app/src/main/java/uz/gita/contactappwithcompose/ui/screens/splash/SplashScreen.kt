@@ -1,5 +1,6 @@
 package uz.gita.contactappwithcompose.ui.screens.splash
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,14 +18,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import uz.gita.contactappwithcompose.R
+import uz.gita.contactappwithcompose.ui.screens.home.HomeScreen
 import uz.gita.contactappwithcompose.ui.theme.ContactAppWithComposeTheme
 
 class SplashScreen : AndroidScreen() {
 
+    @SuppressLint("CoroutineCreationDuringComposition")
     @Composable
     override fun Content() {
         SplashScreenContent()
+        val scope  = CoroutineScope(Dispatchers.Main)
+        val navigator = LocalNavigator.currentOrThrow
+        scope.launch {
+            delay(2000)
+          navigator.push(HomeScreen())
+        }
     }
 }
 
