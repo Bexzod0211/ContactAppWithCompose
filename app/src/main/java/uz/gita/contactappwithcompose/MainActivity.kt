@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
             ContactAppWithComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Navigator(screen = HomeScreen())
+                    Navigator(screen = SplashScreen())
                 }
             }
         }

@@ -17,4 +17,8 @@ class AppRepositoryImpl @Inject constructor(
     override fun getAllContacts(): List<ContactData> {
         return dao.getAllContacts()
     }
+
+    override fun deleteContact(contact: ContactEntity) {
+        dao.deleteContact(contact)
+    }
 }

@@ -7,10 +7,12 @@ import uz.gita.contactappwithcompose.data.source.local.entity.ContactEntity
 @Dao
 interface ContactDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addContact(contact:ContactEntity)
 
     @Query("SELECT * FROM contacts")
     fun getAllContacts():List<ContactData>
 
+    @Delete
+    fun deleteContact(contact: ContactEntity)
 }

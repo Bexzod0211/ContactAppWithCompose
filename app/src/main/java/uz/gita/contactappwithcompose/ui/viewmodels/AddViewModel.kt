@@ -1,7 +1,9 @@
 package uz.gita.contactappwithcompose.ui.viewmodels
 
-import uz.gita.contactappwithcompose.data.source.local.entity.ContactEntity
+import androidx.lifecycle.LiveData
 
 interface AddViewModel {
-    fun addContact(contact:ContactEntity)
+    val messageLiveData:LiveData<String>
+    val popScreenLiveData:LiveData<Unit>
+    fun addContact(id:Int,firsName:String,lastName:String,phone:String):Boolean
 }

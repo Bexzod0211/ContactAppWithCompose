@@ -9,4 +9,6 @@ interface AppRepository {
 
     fun getAllContacts():List<ContactData>
 
+    fun deleteContact(contact: ContactEntity)
+
 }

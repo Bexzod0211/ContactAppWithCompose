@@ -1,6 +1,7 @@
 package uz.gita.contactappwithcompose.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,24 +26,37 @@ import uz.gita.contactappwithcompose.ui.theme.ContactAppWithComposeTheme
 
 
 @Composable
-fun ContactItem(contact:ContactData) {
+fun ContactItem(contact: ContactData,modifier: Modifier = Modifier
+    .fillMaxWidth()
+    .size(0.dp, 80.dp), onMoreClicked: (ContactData) -> Unit) {
     ContactAppWithComposeTheme {
-        Surface {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .size(0.dp, 80.dp)) {
-                Image(painter = painterResource(id = R.drawable.photo_man), contentDescription =null, modifier = Modifier
-                    .padding(start = 16.dp)
-                    .size(60.dp)
-                    .align(Alignment.CenterVertically))
-                Column(modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 16.dp)
-                    .fillMaxHeight(), verticalArrangement = Arrangement.Center) {
+        Surface(modifier = modifier) {
+            Row(
+                modifier = modifier) {
+                Image(
+                    painter = painterResource(id = R.drawable.photo_man), contentDescription = null, modifier = Modifier
+                        .padding(start = 16.dp)
+                        .size(60.dp)
+                        .align(Alignment.CenterVertically)
+                )
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 16.dp)
+                        .fillMaxHeight(), verticalArrangement = Arrangement.Center
+                ) {
                     Text(text = "${contact.firstName} ${contact.lastName}", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     Text(text = contact.phone, color = Color.Gray, modifier = Modifier.padding(top = 8.dp))
                 }
-                Image(painter = painterResource(id = R.drawable.ic_more), contentDescription = null, alignment = Alignment.Center, modifier = Modifier.padding(end = 16.dp).align(Alignment.CenterVertically))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_more), contentDescription = null, alignment = Alignment.Center,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .align(Alignment.CenterVertically)
+                        .clickable {
+                            onMoreClicked.invoke(contact)
+                        },
+                )
             }
         }
     }
@@ -51,5 +65,7 @@ fun ContactItem(contact:ContactData) {
 @Preview
 @Composable
 fun ContactItemPreview() {
-    ContactItem(ContactData(1,"Bexzod","Mamatxalilov","+998916591363"))
+    ContactItem(ContactData(1, "Bexzod", "Mamatxalilov", "+998916591363")) {
+
+    }
 }
