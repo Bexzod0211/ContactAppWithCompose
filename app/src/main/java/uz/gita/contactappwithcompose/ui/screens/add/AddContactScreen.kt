@@ -38,7 +38,7 @@ class AddContactScreen(private val contact:ContactData? = null) : AndroidScreen(
     override fun Content() {
         val viewModel: AddContactContract.ViewModel = getViewModel<AddViewModelImpl>()
 
-        AddScreenContent(viewModel.uiState.collectAsState().value,viewModel::onEventDispatcher,contact = contact?: ContactData(0,"","",""))
+        AddScreenContent(viewModel.uiState.collectAsState().value,viewModel::onEventDispatcher,contact = contact?: ContactData(firstName = "", lastName = "", phone = ""))
     }
 
 }
@@ -111,7 +111,6 @@ fun AddScreenContent(uiState:AddContactContract.UIState,onEventDispatcher:(AddCo
                 Button(
                     onClick = {
                         onEventDispatcher.invoke(AddContactContract.Intent.AddContact(contact.id,fname,lname,phone))
-
                     },
                     modifier = Modifier
                         .padding(start = 16.dp, end = 16.dp, top = 16.dp)
