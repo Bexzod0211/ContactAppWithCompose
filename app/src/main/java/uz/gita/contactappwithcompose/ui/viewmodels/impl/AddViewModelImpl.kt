@@ -1,18 +1,23 @@
 package uz.gita.contactappwithcompose.ui.viewmodels.impl
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import uz.gita.contactappwithcompose.data.source.local.entity.ContactEntity
+import uz.gita.contactappwithcompose.navigation.AppNavigator
 import uz.gita.contactappwithcompose.ui.usecase.AddUseCase
 import uz.gita.contactappwithcompose.ui.viewmodels.AddContactContract
+import uz.gita.contactappwithcompose.utils.myLog
 import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModelImpl @Inject constructor(
-    private val useCase: AddUseCase
+    private val useCase: AddUseCase,
+    private val direction:AddContactContract.Direction
 ) : AddContactContract.ViewModel, ViewModel() {
     /* override val messageLiveData: MutableLiveData<String> = MutableLiveData()
     override val popScreenLiveData: MutableLiveData<Unit> = MutableLiveData()
@@ -43,48 +48,56 @@ class AddViewModelImpl @Inject constructor(
     override val uiState: MutableStateFlow<AddContactContract.UIState> = MutableStateFlow(AddContactContract.UIState())
 
     override fun onEventDispatcher(intent: AddContactContract.Intent) {
-        when(intent){
-            is  AddContactContract.Intent.AddContact->{
-                if (intent.firstName.trim().isEmpty()){
+        when (intent) {
+            is AddContactContract.Intent.AddContact -> {
+                if (intent.firstName.trim().isEmpty()) {
                     uiState.update {
-                        it.copy(message = "Please enter firstname")
+                        it.copy(errorMessage = "Please enter firstname")
                     }
                     return
                 }
-                if (intent.lastName.trim().isEmpty()){
+                if (intent.lastName.trim().isEmpty()) {
                     uiState.update {
-                        it.copy(message = "Please enter lastname")
+                        it.copy(errorMessage = "Please enter lastname")
                     }
                     return
                 }
-                if (intent.phone.trim().isEmpty()){
+                if (intent.phone.trim().isEmpty()) {
                     uiState.update {
-                        it.copy(message = "Please enter phone number")
+                        it.copy(errorMessage = "Please enter phone number")
                     }
                     return
                 }
-                if (!intent.phone.trim().startsWith("+998")||intent.phone.trim().length != 13 ){
+                if (!intent.phone.trim().startsWith("+998") || intent.phone.trim().length != 13) {
                     uiState.update {
-                        it.copy(message = "Phone number is not correct")
+                        it.copy(errorMessage = "Phone number is not correct")
                     }
                     return
                 }
-                useCase.addContact(ContactEntity(intent.id,intent.firstName,intent.lastName,intent.phone))
-                uiState.update {
-                    it.copy(message = "Contact has been successfully ", popScreenState = true)
+                useCase.addContact(ContactEntity(intent.id, intent.firstName, intent.lastName, intent.phone))
+                viewModelScope.launch {
+                    uiState.update {
+                        myLog("sending message")
+                        it.copy(message = "Contact has been successfully ")
+                    }
+                    delay(10)
+                    direction.navigateToHomeScreen()
                 }
             }
-            is AddContactContract.Intent.ClearMessage ->{
+
+            is AddContactContract.Intent.ClearMessage -> {
                 uiState.update {
-                    it.copy(message = "")
+                    it.copy(errorMessage = "", message = "")
                 }
             }
-            is AddContactContract.Intent.PopScreen ->{
+
+            is AddContactContract.Intent.PopScreen -> {
                 uiState.update {
                     it.copy(popScreenState = true)
                 }
             }
-            is AddContactContract.Intent.ClearPopScreen ->{
+
+            is AddContactContract.Intent.ClearPopScreen -> {
                 uiState.update {
                     it.copy(popScreenState = false)
                 }

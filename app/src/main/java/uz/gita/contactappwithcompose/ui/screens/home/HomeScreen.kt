@@ -53,9 +53,9 @@ class HomeScreen : AndroidScreen() {
 fun HomeScreenContent(uiState:HomeContract.UIState,onEventDispatcher:(HomeContract.Intent)->Unit) {
 
     onEventDispatcher.invoke(HomeContract.Intent.LoadAllContacts)
-    val navigator = LocalNavigator.currentOrThrow
+//    val navigator = LocalNavigator.currentOrThrow
 
-    if (uiState.openAddContactState){
+   /* if (uiState.openAddContactState){
         navigator.push(AddContactScreen())
         onEventDispatcher.invoke(HomeContract.Intent.ClearOpenScreen)
     }
@@ -63,7 +63,7 @@ fun HomeScreenContent(uiState:HomeContract.UIState,onEventDispatcher:(HomeContra
     if (uiState.openEditContactState){
         navigator.push(AddContactScreen(uiState.editContact))
         onEventDispatcher.invoke(HomeContract.Intent.ClearOpenScreen)
-    }
+    }*/
 
     if (uiState.message != ""){
         Toast.makeText(LocalContext.current, uiState.message, Toast.LENGTH_SHORT).show()

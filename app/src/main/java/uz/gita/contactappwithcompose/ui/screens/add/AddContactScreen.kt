@@ -15,7 +15,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,8 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import uz.gita.contactappwithcompose.data.model.ContactData
 import uz.gita.contactappwithcompose.ui.theme.ContactAppWithComposeTheme
 import uz.gita.contactappwithcompose.ui.viewmodels.AddContactContract
@@ -59,7 +56,7 @@ fun AddScreenContent(uiState:AddContactContract.UIState,onEventDispatcher:(AddCo
     var phone by remember {
         mutableStateOf(contact.phone)
     }
-    val navigator = LocalNavigator.currentOrThrow
+//    val navigator = LocalNavigator.currentOrThrow
     if (uiState.message != ""){
         val msg = if (contact.id == 0) "added"
         else "edited"
@@ -67,10 +64,15 @@ fun AddScreenContent(uiState:AddContactContract.UIState,onEventDispatcher:(AddCo
         onEventDispatcher.invoke(AddContactContract.Intent.ClearMessage)
     }
 
-    if (uiState.popScreenState){
-        navigator.pop()
-        onEventDispatcher.invoke(AddContactContract.Intent.ClearPopScreen)
+    if (uiState.errorMessage != ""){
+        Toast.makeText(LocalContext.current, uiState.message, Toast.LENGTH_SHORT).show()
+        onEventDispatcher.invoke(AddContactContract.Intent.ClearMessage)
     }
+
+//    if (uiState.popScreenState){
+//        navigator.pop()
+//        onEventDispatcher.invoke(AddContactContract.Intent.ClearPopScreen)
+//    }
 
 //    val popScreen = viewModel.popScreenLiveData.observeAsState()
 //    popScreen.value?.let {

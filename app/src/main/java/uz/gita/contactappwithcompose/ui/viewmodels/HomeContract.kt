@@ -36,4 +36,10 @@ interface HomeContract {
 
         fun onEventDispatcher(intent:Intent)
     }
+
+    interface Direction {
+        suspend fun navigateToAddContactScreen()
+        suspend fun navigateToAddContactScreen(contact:ContactData)
+
+    }
 }

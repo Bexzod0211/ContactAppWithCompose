@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 import uz.gita.contactappwithcompose.R
 import uz.gita.contactappwithcompose.ui.screens.home.HomeScreen
 import uz.gita.contactappwithcompose.ui.theme.ContactAppWithComposeTheme
+import uz.gita.contactappwithcompose.utils.myLog
 
 class SplashScreen : AndroidScreen() {
 
@@ -34,9 +36,8 @@ class SplashScreen : AndroidScreen() {
     @Composable
     override fun Content() {
         SplashScreenContent()
-        val scope  = CoroutineScope(Dispatchers.Main)
         val navigator = LocalNavigator.currentOrThrow
-        scope.launch {
+        LaunchedEffect(key1 = navigator) {
             delay(2000)
           navigator.push(HomeScreen())
         }

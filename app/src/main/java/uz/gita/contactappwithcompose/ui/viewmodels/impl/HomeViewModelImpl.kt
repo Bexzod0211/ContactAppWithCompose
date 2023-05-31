@@ -7,13 +7,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import uz.gita.contactappwithcompose.navigation.AppNavigator
+import uz.gita.contactappwithcompose.ui.screens.add.AddContactScreen
 import uz.gita.contactappwithcompose.ui.usecase.HomeUseCase
 import uz.gita.contactappwithcompose.ui.viewmodels.HomeContract
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModelImpl @Inject constructor(
-    private val useCase: HomeUseCase
+    private val useCase: HomeUseCase,
+    private val direction:HomeContract.Direction
 ) : HomeContract.ViewModel, ViewModel() {
     //    override val contactsLiveData: LiveData<List<ContactData>>
 //        get() = useCase.getAllContacts().asLiveData()
@@ -57,14 +61,20 @@ class HomeViewModelImpl @Inject constructor(
     override fun onEventDispatcher(intent: HomeContract.Intent) {
         when(intent){
             is HomeContract.Intent.OpenAddContact->{
-                uiState.update {
-                    it.copy(openAddContactState = true)
+                viewModelScope.launch {
+                    direction.navigateToAddContactScreen()
                 }
+//                uiState.update {
+//                    it.copy(openAddContactState = true)
+//                }
             }
             is HomeContract.Intent.EditContact->{
-                uiState.update {
-                    it.copy(editContact = intent.contact, openEditContactState = true)
+                viewModelScope.launch {
+                    direction.navigateToAddContactScreen(intent.contact)
                 }
+//                uiState.update {
+//                    it.copy(editContact = intent.contact, openEditContactState = true)
+//                }
             }
             is HomeContract.Intent.DeleteContact->{
                 useCase.deleteContact(intent.entity).onEach {

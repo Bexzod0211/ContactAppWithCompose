@@ -20,13 +20,18 @@ interface AddContactContract {
     }
 
     data class UIState(
+        val errorMessage:String = "",
         val message:String = "",
-        val popScreenState:Boolean = false,
+        val popScreenState:Boolean = false
     )
 
     interface ViewModel {
         val uiState:StateFlow<UIState>
 
         fun onEventDispatcher(intent:Intent)
+    }
+
+    interface Direction {
+        suspend fun navigateToHomeScreen()
     }
 }
