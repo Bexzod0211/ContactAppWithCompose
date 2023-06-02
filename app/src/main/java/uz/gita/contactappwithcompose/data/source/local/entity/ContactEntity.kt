@@ -9,5 +9,6 @@ data class ContactEntity(
     val id:Int,
     val firstName:String,
     val lastName:String,
-    val phone:String
+    val phone:String,
+    var isSavedToServer:Int = 0
 )

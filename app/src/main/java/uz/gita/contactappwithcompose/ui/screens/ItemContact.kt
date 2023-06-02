@@ -22,11 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uz.gita.contactappwithcompose.R
 import uz.gita.contactappwithcompose.data.model.ContactData
+import uz.gita.contactappwithcompose.data.response.ContactDataResponse
 import uz.gita.contactappwithcompose.ui.theme.ContactAppWithComposeTheme
 
 
 @Composable
-fun ContactItem(contact: ContactData,modifier: Modifier = Modifier
+fun ContactItem(contact: ContactDataResponse,modifier: Modifier = Modifier
     .fillMaxWidth()
     .size(0.dp, 80.dp), onMoreClicked: (ContactData) -> Unit) {
     ContactAppWithComposeTheme {
@@ -54,7 +55,7 @@ fun ContactItem(contact: ContactData,modifier: Modifier = Modifier
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically)
                         .clickable {
-                            onMoreClicked.invoke(contact)
+                            onMoreClicked.invoke(contact.toData())
                         },
                 )
             }
@@ -65,7 +66,7 @@ fun ContactItem(contact: ContactData,modifier: Modifier = Modifier
 @Preview
 @Composable
 fun ContactItemPreview() {
-    ContactItem(ContactData(1, "Bexzod", "Mamatxalilov", "+998916591363")) {
+    ContactItem(ContactDataResponse(1, "Bexzod", "Mamatxalilov", "+998916591363")) {
 
     }
 }

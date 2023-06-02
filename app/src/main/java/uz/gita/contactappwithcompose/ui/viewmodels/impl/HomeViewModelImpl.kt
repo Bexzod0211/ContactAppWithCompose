@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uz.gita.contactappwithcompose.navigation.AppNavigator
-import uz.gita.contactappwithcompose.ui.screens.add.AddContactScreen
 import uz.gita.contactappwithcompose.ui.usecase.HomeUseCase
 import uz.gita.contactappwithcompose.ui.viewmodels.HomeContract
 import javax.inject.Inject
@@ -94,9 +92,16 @@ class HomeViewModelImpl @Inject constructor(
                 }
             }
             is HomeContract.Intent.LoadAllContacts->{
-                useCase.getAllContacts().onEach {contacts->
-                    uiState.update {
-                        it.copy(contacts = contacts)
+                useCase.getAllContacts().onEach {result ->
+                    result.onSuccess {contacts->
+                        uiState.update {
+                            it.copy(contacts = contacts)
+                        }
+                    }
+                    result.onFailure { e->
+                        uiState.update {data->
+                            data.copy(message = e.message?:"null")
+                        }
                     }
                 }
                     .launchIn(viewModelScope)

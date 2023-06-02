@@ -2,6 +2,7 @@ package uz.gita.contactappwithcompose.ui.viewmodels
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.contactappwithcompose.data.model.ContactData
+import uz.gita.contactappwithcompose.data.response.ContactDataResponse
 import uz.gita.contactappwithcompose.data.source.local.entity.ContactEntity
 
 /*
@@ -25,7 +26,7 @@ interface HomeContract {
 
     data class UIState(
         val openAddContactState:Boolean = false,
-        val contacts:List<ContactData> = listOf(),
+        val contacts:List<ContactDataResponse> = listOf(),
         val message:String = "",
         val editContact:ContactData? = null,
         val openEditContactState:Boolean = false

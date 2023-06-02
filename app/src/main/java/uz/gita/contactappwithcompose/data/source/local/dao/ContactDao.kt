@@ -15,4 +15,7 @@ interface ContactDao {
 
     @Delete
     fun deleteContact(contact: ContactEntity)
+
+    @Query("Update contacts SET isSavedToServer=1 where id = :id")
+    fun updateIsSavedSetSaved(id:Int)
 }
