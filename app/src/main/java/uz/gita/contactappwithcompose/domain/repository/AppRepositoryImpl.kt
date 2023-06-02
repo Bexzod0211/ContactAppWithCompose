@@ -73,9 +73,10 @@ class AppRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAllContactsFromServer(): Result<List<ContactDataResponse>> {
-        val response = api.getAllContacts()
+
 
         try {
+            val response = api.getAllContacts()
             if (response.isSuccessful) {
                 response.body()?.let {
                     return Result.success(it)
