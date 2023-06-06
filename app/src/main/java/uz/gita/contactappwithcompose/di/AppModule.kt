@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule : Initializer<WorkManager> {
-    private val base_url = "http://b9e1-185-139-137-21.ngrok-free.app"
+    private val base_url = "http://97dc-185-139-137-58.ngrok-free.app"
 
     @Provides
     @Singleton

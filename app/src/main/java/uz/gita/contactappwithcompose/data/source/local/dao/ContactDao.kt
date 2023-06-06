@@ -3,6 +3,7 @@ package uz.gita.contactappwithcompose.data.source.local.dao
 import androidx.room.*
 import uz.gita.contactappwithcompose.data.model.ContactData
 import uz.gita.contactappwithcompose.data.source.local.entity.ContactEntity
+import uz.gita.contactappwithcompose.data.source.local.entity.DeletedEntity
 
 @Dao
 interface ContactDao {
@@ -16,6 +17,11 @@ interface ContactDao {
     @Delete
     fun deleteContact(contact: ContactEntity)
 
-    @Query("Update contacts SET isSavedToServer=1 where id = :id")
+    @Query("Update contacts SET isSavedToServer = 1 where id = :id")
     fun updateIsSavedSetSaved(id:Int)
+//    @Insert
+//    fun addDeletedId(entity:DeletedEntity)
+
+//    @Delete
+//    fun deleteDeletedId()
 }
